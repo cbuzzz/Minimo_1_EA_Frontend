@@ -31,4 +31,12 @@ export class MessageService {
   getUnreadMessages(userId: string): Observable<Message[]> {
     return this.http.get<Message[]>(`${this.apiUrl}/unread/${userId}`);
   }
+  
+  updateMessage(id: string, message: Partial<Message>): Observable<Message> {
+    return this.http.put<Message>(`${this.apiUrl}/${id}`, message);
+  }
+
+  deleteMessage(id: string): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`);
+  }
 }

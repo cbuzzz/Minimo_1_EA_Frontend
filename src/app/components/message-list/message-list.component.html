@@ -1,6 +1,7 @@
 <div>
   <h2>Enviar mensaje</h2>
 
+  <!-- Formulario para enviar un mensaje -->
   <div>
     <label for="senderName">Nombre del usuario origen:</label>
     <input type="text" [(ngModel)]="senderName" placeholder="Escribe el nombre del usuario origen" />
@@ -14,6 +15,7 @@
     <button (click)="sendMessage()">Enviar mensaje</button>
   </div>
 
+  <!-- Lista de todos los chats existentes -->
   <div *ngIf="allChats.length > 0">
     <h3>Chats existentes</h3>
     <ul>
@@ -23,11 +25,23 @@
     </ul>
   </div>
 
+  <!-- Chat entre los usuarios seleccionados -->
   <div *ngIf="chatMessages.length > 0">
     <h3>Chat entre {{ chatTitleSender }} y {{ chatTitleReceiver }}</h3>
     <ul>
       <li *ngFor="let message of chatMessages">
-        <strong>{{ message.senderName }}:</strong> {{ message.content }}
+        <strong>{{ message.senderName }}:</strong> 
+
+        <!-- Modo de visualización o edición del mensaje -->
+        <span *ngIf="!message.isEditing">{{ message.content }}</span>
+        <input *ngIf="message.isEditing" [(ngModel)]="message.content" />
+
+        <!-- Botón para activar el modo de edición o guardar cambios -->
+        <button *ngIf="!message.isEditing" (click)="message.isEditing = true">Editar</button>
+        <button *ngIf="message.isEditing" (click)="updateMessage(message._id, message.content); message.isEditing = false">Guardar</button>
+        
+        <!-- Botón para eliminar el mensaje -->
+        <button (click)="deleteMessage(message._id)">Eliminar</button>
       </li>
     </ul>
   </div>

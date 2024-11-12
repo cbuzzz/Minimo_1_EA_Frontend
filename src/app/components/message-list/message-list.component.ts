@@ -17,7 +17,7 @@ export class MessageListComponent implements OnInit {
   senderName: string = '';
   receiverName: string = '';
   newMessage: string = '';
-  chatMessages: { content: string; senderName: string }[] = [];
+  chatMessages: { _id?: string; content: string; senderName: string; isEditing?: boolean }[] = [];
   chatId: string | null = null;
   chatTitleSender: string = '';
   chatTitleReceiver: string = '';
@@ -29,10 +29,10 @@ export class MessageListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadAllChats();  // Cargar todos los chats al inicio
+    this.loadAllChats();
   }
 
-  // Método para cargar todos los chats al inicio
+  // Método para cargar todos los chats
   loadAllChats(): void {
     this.messageService.getAllChats().subscribe(chats => {
       this.allChats = chats.map(chat => ({
@@ -77,8 +77,10 @@ export class MessageListComponent implements OnInit {
 
         this.messageService.createMessage(message).subscribe(sentMessage => {
           this.chatMessages.push({
+            _id: sentMessage._id,
             content: sentMessage.content,
-            senderName: this.senderName
+            senderName: this.senderName,
+            isEditing: false  // Añadir isEditing como falso inicialmente
           });
           this.newMessage = ''; // Limpiar campo de mensaje
         });
@@ -86,7 +88,27 @@ export class MessageListComponent implements OnInit {
     });
   }
 
-  // Método para cargar el chat entre los usuarios y mostrar los nombres en cada mensaje
+  // Método para actualizar un mensaje
+  updateMessage(id: string | undefined, updatedContent: string): void {
+    if (!id) return; // Verificar que el ID no sea undefined
+    this.messageService.updateMessage(id, { content: updatedContent }).subscribe(updatedMessage => {
+      const index = this.chatMessages.findIndex(msg => msg._id === id);
+      if (index !== -1) {
+        this.chatMessages[index].content = updatedMessage.content;
+        this.chatMessages[index].isEditing = false;  // Desactivar el modo de edición
+      }
+    });
+  }
+
+  // Método para eliminar un mensaje
+  deleteMessage(id: string | undefined): void {
+    if (!id) return; // Verificar que el ID no sea undefined
+    this.messageService.deleteMessage(id).subscribe(response => {
+      this.chatMessages = this.chatMessages.filter(msg => msg._id !== id);
+    });
+  }
+
+  // Método para cargar el chat entre los usuarios y añadir isEditing a cada mensaje
   loadChat(senderName: string, receiverName: string): void {
     this.chatTitleSender = senderName;
     this.chatTitleReceiver = receiverName;
@@ -106,8 +128,10 @@ export class MessageListComponent implements OnInit {
         const chatId = [sender._id, receiver._id].sort().join('-');
         this.messageService.getChatMessages(chatId).subscribe(messages => {
           this.chatMessages = messages.map(message => ({
+            _id: message._id,
             content: message.content,
-            senderName: message.senderId === sender._id ? senderName : receiverName
+            senderName: message.senderId === sender._id ? senderName : receiverName,
+            isEditing: false  // Añadir isEditing como falso inicialmente
           }));
         });
       });

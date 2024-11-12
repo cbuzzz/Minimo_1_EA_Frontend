@@ -1,0 +1,135 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #F9F9F9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Título principal */
+  h2 {
+    color: #4C0000;
+    text-align: center;
+  }
+  
+  /* Formulario para enviar mensajes */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  form label {
+    color: #4C0000;
+    font-weight: bold;
+  }
+  
+  form input[type="text"] {
+    padding: 8px;
+    border: 1px solid #8B0000;
+    border-radius: 5px;
+  }
+  
+  form button {
+    background-color: #4CAF50;
+    color: #FFF;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  form button:hover {
+    background-color: #388E3C;
+  }
+  
+  /* Lista de chats */
+  .chat-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  .chat-list li {
+    background-color: #8B0000;
+    color: #FFF;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .chat-list li:hover {
+    background-color: #4C0000;
+  }
+  
+  /* Chat seleccionado */
+  .selected-chat {
+    margin-top: 20px;
+  }
+  
+  .selected-chat h3 {
+    color: #4C0000;
+  }
+  
+  .message-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .message-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #F1F1F1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .message-list li strong {
+    color: #8B0000;
+  }
+  
+  .message-list li input[type="text"] {
+    padding: 5px;
+    border: 1px solid #8B0000;
+    border-radius: 3px;
+  }
+  
+  /* Botones de mensaje */
+  .message-list button {
+    background-color: #FF4C4C;
+    color: #FFF;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .message-list button:hover {
+    background-color: #8B0000;
+  }
+  
+  /* Botones para edición */
+  .edit-buttons {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .edit-buttons button {
+    background-color: #4CAF50;
+  }
+  
+  .edit-buttons button:hover {
+    background-color: #388E3C;
+  }
+  
