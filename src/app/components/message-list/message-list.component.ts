@@ -1,3 +1,4 @@
+// src/app/components/message-list/message-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,11 +17,11 @@ export class MessageListComponent implements OnInit {
   senderName: string = '';
   receiverName: string = '';
   newMessage: string = '';
-  chatMessages: Message[] = [];
+  chatMessages: { content: string; senderName: string }[] = [];
   chatId: string | null = null;
   chatTitleSender: string = '';
   chatTitleReceiver: string = '';
-  allChats: { senderName: string; receiverName: string }[] = [];  // Propiedad para almacenar todos los chats
+  allChats: { senderName: string; receiverName: string }[] = [];
 
   constructor(
     private messageService: MessageService,
@@ -75,14 +76,17 @@ export class MessageListComponent implements OnInit {
         };
 
         this.messageService.createMessage(message).subscribe(sentMessage => {
-          this.chatMessages.push(sentMessage);
+          this.chatMessages.push({
+            content: sentMessage.content,
+            senderName: this.senderName
+          });
           this.newMessage = ''; // Limpiar campo de mensaje
         });
       });
     });
   }
 
-  // Método para cargar el chat entre los usuarios
+  // Método para cargar el chat entre los usuarios y mostrar los nombres en cada mensaje
   loadChat(senderName: string, receiverName: string): void {
     this.chatTitleSender = senderName;
     this.chatTitleReceiver = receiverName;
@@ -102,8 +106,8 @@ export class MessageListComponent implements OnInit {
         const chatId = [sender._id, receiver._id].sort().join('-');
         this.messageService.getChatMessages(chatId).subscribe(messages => {
           this.chatMessages = messages.map(message => ({
-            ...message,
-            senderId: message.senderId === sender._id ? senderName : receiverName
+            content: message.content,
+            senderName: message.senderId === sender._id ? senderName : receiverName
           }));
         });
       });

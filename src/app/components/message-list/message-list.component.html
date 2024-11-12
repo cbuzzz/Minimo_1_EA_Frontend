@@ -1,7 +1,6 @@
 <div>
   <h2>Enviar mensaje</h2>
 
-  <!-- Formulario para enviar un mensaje -->
   <div>
     <label for="senderName">Nombre del usuario origen:</label>
     <input type="text" [(ngModel)]="senderName" placeholder="Escribe el nombre del usuario origen" />
@@ -15,7 +14,6 @@
     <button (click)="sendMessage()">Enviar mensaje</button>
   </div>
 
-  <!-- Lista de todos los chats existentes -->
   <div *ngIf="allChats.length > 0">
     <h3>Chats existentes</h3>
     <ul>
@@ -25,7 +23,6 @@
     </ul>
   </div>
 
-  <!-- Chat entre los usuarios seleccionados -->
   <div *ngIf="chatMessages.length > 0">
     <h3>Chat entre {{ chatTitleSender }} y {{ chatTitleReceiver }}</h3>
     <ul>
