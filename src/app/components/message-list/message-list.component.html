@@ -1,0 +1,37 @@
+<div>
+  <h2>Enviar mensaje</h2>
+
+  <!-- Formulario para enviar un mensaje -->
+  <div>
+    <label for="senderName">Nombre del usuario origen:</label>
+    <input type="text" [(ngModel)]="senderName" placeholder="Escribe el nombre del usuario origen" />
+
+    <label for="receiverName">Nombre del usuario destino:</label>
+    <input type="text" [(ngModel)]="receiverName" placeholder="Escribe el nombre del usuario destino" />
+
+    <label for="messageContent">Mensaje:</label>
+    <input type="text" [(ngModel)]="newMessage" placeholder="Escribe el mensaje" />
+
+    <button (click)="sendMessage()">Enviar mensaje</button>
+  </div>
+
+  <!-- Lista de todos los chats existentes -->
+  <div *ngIf="allChats.length > 0">
+    <h3>Chats existentes</h3>
+    <ul>
+      <li *ngFor="let chat of allChats" (click)="loadChat(chat.senderName, chat.receiverName)">
+        Chat entre {{ chat.senderName }} y {{ chat.receiverName }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Chat entre los usuarios seleccionados -->
+  <div *ngIf="chatMessages.length > 0">
+    <h3>Chat entre {{ chatTitleSender }} y {{ chatTitleReceiver }}</h3>
+    <ul>
+      <li *ngFor="let message of chatMessages">
+        <strong>{{ message.senderName }}:</strong> {{ message.content }}
+      </li>
+    </ul>
+  </div>
+</div>

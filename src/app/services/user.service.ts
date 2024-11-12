@@ -36,6 +36,10 @@ export class UserService {
   toggleHabilitacion(id: string, habilitado: boolean): Observable<User> {
     return this.http.patch<User>(`${this.apiUrl}/${id}/habilitacion`, { habilitado });
   }
+  // Obtener el ID del usuario según su nombre
+  getUserByName(name: string): Observable<{ _id: string } | null> {
+    return this.http.get<{ _id: string } | null>(`${this.apiUrl}/findByName/${name}`);
+  }
 }
 
 
